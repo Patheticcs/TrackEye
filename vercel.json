@@ -1,14 +1,6 @@
 {
-  "redirects": [
-    {
-      "source": "/404",
-      "destination": "/404",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "destination": "/404",
-      "permanent": false
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "status": 404, "dest": "/404" }
   ]
 }
