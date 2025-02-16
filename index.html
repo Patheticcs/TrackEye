@@ -1024,7 +1024,7 @@
               <i class="fas fa-envelope"></i>
               <div>
                 <h3>Email Us</h3>
-                <p>support@trackeye.com</p>
+                <p>patheticcs@gmail.com</p>
               </div>
             </div>
             <div class="contact-item">
@@ -1049,17 +1049,17 @@
               </div>
             </div>
           </div>
-          <form class="contact-form" data-aos="fade-left">
+          <form class="contact-form" id="contact-form" data-aos="fade-left">
             <div class="form-group">
-              <input type="text" class="form-input" id="name" placeholder=" ">
+              <input type="text" class="form-input" id="name" name="name" placeholder=" ">
               <label class="form-label" for="name">Your Name</label>
             </div>
             <div class="form-group">
-              <input type="email" class="form-input" id="email" placeholder=" ">
+              <input type="email" class="form-input" id="email" name="email" placeholder=" ">
               <label class="form-label" for="email">Your Email</label>
             </div>
             <div class="form-group">
-              <select class="form-input" id="subject">
+              <select class="form-input" id="subject" name="subject">
                 <option value="">Select Subject</option>
                 <option value="sales">Sales Inquiry</option>
                 <option value="support">Technical Support</option>
@@ -1068,7 +1068,7 @@
               </select>
             </div>
             <div class="form-group">
-              <textarea class="form-textarea" id="message" placeholder=" "></textarea>
+              <textarea class="form-textarea" id="message" name="message" placeholder=" "></textarea>
               <label class="form-label" for="message">Your Message</label>
             </div>
             <button type="submit" class="btn btn-primary">
@@ -1207,6 +1207,21 @@
             });
             mobileMenu.classList.remove('active');
           }
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      (function() {
+        emailjs.init("Z3sL7Rd9MELcEsZ_v");
+      })();
+      document.getElementById("contact-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        emailjs.sendForm("service_vv4a8gc", "template_kqdcx4t", this).then(function(response) {
+          console.log("SUCCESS", response);
+          alert("Message sent successfully!");
+        }, function(error) {
+          console.log("FAILED", error);
+          alert("Failed to send message. Please try again.");
         });
       });
     </script>
