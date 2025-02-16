@@ -141,6 +141,8 @@
         display: flex;
         gap: 2rem;
         align-items: center;
+        justify-content: center;
+        padding: 1rem 0;
       }
 
       .nav-link {
@@ -151,6 +153,13 @@
         padding: 0.5rem 1rem;
         transition: var(--transition-smooth);
         overflow: hidden;
+        font-size: 1.1rem;
+        outline: none;
+      }
+
+      .nav-link:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
       }
 
       .nav-link::before {
@@ -163,10 +172,31 @@
         background: var(--primary);
         transform: translateX(-100%);
         transition: var(--transition-smooth);
+        opacity: 0.8;
       }
 
-      .nav-link:hover::before {
+      .nav-link:hover::before,
+      .nav-link:focus::before {
         transform: translateX(0);
+      }
+
+      .nav-link.active {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      .nav-link::before {
+        transition-delay: 0.1s;
+      }
+
+      .nav-link:hover {
+        background: rgba(var(--primary-rgb), 0.1);
+        border-radius: 4px;
       }
 
       .hero {
@@ -191,7 +221,6 @@
             rgba(128, 128, 128, 0.05) 25%,
             rgba(64, 64, 64, 0.025) 50%,
             transparent 75%);
-        animation: rotate 20s linear infinite;
       }
 
       .hero::after {
@@ -257,7 +286,7 @@
 
       .features {
         padding: 8rem 2rem;
-        background: var(--surface-gradient);
+        background: rgb(0, 0, 0, 0);
         position: relative;
       }
 
@@ -529,6 +558,76 @@
       .pricing-features li i {
         color: var(--success);
         font-size: 1.2rem;
+      }
+
+      .btn-discord::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        z-index: -1;
+        pointer-events: none;
+        animation: glowPulse 3s ease-in-out infinite;
+      }
+
+      .btn-discord i {
+        font-size: 1.2rem;
+      }
+
+      .btn-discord {
+        background: rgb(255, 255, 255, 1);
+        color: var(--background);
+        height: 50px;
+        width: 190px;
+      }
+
+      .btn-discord:hover {
+        background: var(--text-secondary);
+      }
+
+      .btn-discord::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+      }
+
+      .btn-discord:hover::before {
+        left: 100%;
+      }
+
+      .btn-discord-outline {
+        border: 2px solid var(--text);
+        color: var(--text);
+        background: transparent;
+      }
+
+      .btn-discord-outline:hover {
+        background: var(--text);
+        color: var(--background);
+      }
+
+      .btn-discord {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        gap: 0.5rem;
       }
 
       .btn {
