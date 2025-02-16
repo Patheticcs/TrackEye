@@ -25,21 +25,21 @@
   </head>
   <style>
     :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --secondary: #8b5cf6;
-      --accent: #d946ef;
-      --success: #22c55e;
-      --warning: #eab308;
-      --danger: #ef4444;
-      --background: #0f172a;
-      --surface: #1e293b;
-      --surface-dark: #0f1729;
-      --text: #e2e8f0;
-      --text-secondary: #94a3b8;
-      --primary-gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-      --surface-gradient: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
-      --glow: 0 0 20px rgba(139, 92, 246, 0.3);
+      --primary: #ffffff;
+      --primary-dark: #e0e0e0;
+      --secondary: #808080;
+      --accent: #404040;
+      --success: #00ff00;
+      --warning: #ffff00;
+      --danger: #ff0000;
+      --background: #000000;
+      --surface: #0a0a0a;
+      --surface-dark: #050505;
+      --text: #ffffff;
+      --text-secondary: #808080;
+      --primary-gradient: linear-gradient(135deg, #ffffff 0%, #808080 50%, #404040 100%);
+      --surface-gradient: linear-gradient(145deg, rgba(10, 10, 10, 0.7), rgba(5, 5, 5, 0.8));
+      --glow: 0 0 20px rgba(255, 255, 255, 0.15);
     }
 
     * {
@@ -69,9 +69,9 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
     }
 
@@ -92,10 +92,7 @@
     .nav-logo {
       font-size: 1.8rem;
       font-weight: bold;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--text);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -103,10 +100,7 @@
 
     .nav-logo i {
       font-size: 2rem;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--text);
     }
 
     .nav-link {
@@ -120,13 +114,13 @@
     }
 
     .nav-link:hover {
-      background: rgba(99, 102, 241, 0.1);
-      color: var(--primary);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
     }
 
     .nav-link.active {
-      background: var(--primary-gradient);
-      color: white;
+      background: var(--primary);
+      color: var(--background);
     }
 
     .hero {
@@ -147,9 +141,9 @@
       width: 200%;
       height: 200%;
       background: radial-gradient(circle at center,
-          rgba(99, 102, 241, 0.15) 0%,
-          rgba(139, 92, 246, 0.1) 25%,
-          rgba(217, 70, 239, 0.05) 50%,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(128, 128, 128, 0.05) 25%,
+          rgba(64, 64, 64, 0.025) 50%,
           transparent 75%);
       animation: rotate 20s linear infinite;
     }
@@ -166,10 +160,7 @@
       font-weight: 800;
       margin-bottom: 1.5rem;
       line-height: 1.2;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--text);
       animation: float 6s ease-in-out infinite;
     }
 
@@ -199,10 +190,7 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 4rem;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--text);
     }
 
     .features-grid {
@@ -212,14 +200,20 @@
     }
 
     .feature-card {
-      background: rgba(30, 41, 59, 0.5);
+      background: rgba(10, 10, 10, 0.5);
       border-radius: 1rem;
       padding: 2rem;
       transition: all 0.3s ease;
-      border: 1px solid rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
       cursor: pointer;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: var(--glow);
     }
 
     .feature-card::before {
@@ -232,12 +226,6 @@
       background: var(--primary-gradient);
       opacity: 0;
       transition: opacity 0.3s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(99, 102, 241, 0.3);
-      box-shadow: var(--glow);
     }
 
     .feature-card:hover::before {
@@ -268,7 +256,8 @@
     .feature-icon {
       width: 60px;
       height: 60px;
-      background: var(--primary-gradient);
+      background: var(--text);
+      color: var(--background);
       border-radius: 1rem;
       display: flex;
       align-items: center;
@@ -283,7 +272,7 @@
     }
 
     .feature-icon i {
-      color: white;
+      color: black;
       font-size: 1.5rem;
       transition: all 0.3s ease;
     }
@@ -296,8 +285,7 @@
       font-size: 1.25rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      position: relative;
-      transition: all 0.3s ease;
+      color: var(--text);
     }
 
     .feature-card:hover .feature-title {
@@ -306,7 +294,6 @@
 
     .feature-description {
       color: var(--text-secondary);
-      position: relative;
     }
 
     .pricing {
@@ -323,18 +310,18 @@
     }
 
     .pricing-card {
-      background: rgba(30, 41, 59, 0.5);
+      background: rgba(10, 10, 10, 0.5);
       border-radius: 1rem;
       padding: 3rem 2rem;
       text-align: center;
       transition: all 0.3s ease;
-      border: 1px solid rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
     }
 
     .pricing-card.popular {
-      border: 2px solid var(--primary);
+      border: 2px solid var(--text);
       transform: scale(1.05);
     }
 
@@ -362,7 +349,7 @@
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: var(--primary);
+      color: var(--text);
     }
 
     .pricing-price {
@@ -399,7 +386,7 @@
 
     .pricing-features li {
       margin-bottom: 1rem;
-      color: var(--text-secondary);
+      color: var(--text);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -431,8 +418,12 @@
     }
 
     .btn-primary {
-      background: var(--primary-gradient);
-      color: white;
+      background: var(--text);
+      color: var(--background);
+    }
+
+    .btn-primary:hover {
+      background: var(--text-secondary);
     }
 
     .btn-primary::before {
@@ -451,14 +442,14 @@
     }
 
     .btn-outline {
-      border: 2px solid var(--primary);
-      color: var(--primary);
+      border: 2px solid var(--text);
+      color: var(--text);
       background: transparent;
     }
 
     .btn-outline:hover {
-      background: var(--primary);
-      color: white;
+      background: var(--text);
+      color: var(--background);
     }
 
     .contact {
@@ -485,7 +476,8 @@
       align-items: center;
       gap: 1rem;
       padding: 1.5rem;
-      background: rgba(30, 41, 59, 0.5);
+      background: rgba(10, 10, 10, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 1rem;
       transition: all 0.3s ease;
     }
@@ -535,8 +527,8 @@
       width: 100%;
       padding: 1rem;
       border-radius: 0.5rem;
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      background: rgba(30, 41, 59, 0.5);
+      background: rgba(5, 5, 5, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text);
       font-family: inherit;
       transition: all 0.3s ease;
@@ -545,8 +537,8 @@
     .form-input:focus,
     .form-textarea:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
     }
 
     .form-input:focus+.form-label,
@@ -576,12 +568,12 @@
     }
 
     .team-member {
-      background: rgba(30, 41, 59, 0.5);
+      background: rgba(10, 10, 10, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 1rem;
       padding: 2rem;
       text-align: center;
       transition: all 0.3s ease;
-      border: 1px solid rgba(99, 102, 241, 0.1);
       position: relative;
       overflow: hidden;
     }
@@ -589,6 +581,7 @@
     .team-member:hover {
       transform: translateY(-10px);
       box-shadow: var(--glow);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .team-member img {
@@ -603,7 +596,7 @@
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
-      color: var(--primary);
+      color: var(--text);
     }
 
     .team-member p {
@@ -629,9 +622,9 @@
     }
 
     .footer {
-      background: var(--surface-dark);
       padding: 4rem 2rem;
-      border-top: 1px solid rgba(99, 102, 241, 0.1);
+      background: var(--surface-dark);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
     }
 
@@ -701,11 +694,11 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(99, 102, 241, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
@@ -725,6 +718,8 @@
 
     .social-links a:hover {
       transform: translateY(-5px);
+      background: var(--text);
+      color: var(--background);
     }
 
     .social-links a:hover::before {
@@ -894,6 +889,9 @@
   </head>
   <body>
     <!-- Loader -->
+    <div class="loader">
+      <div class="loader-content"></div>
+    </div>
     <!-- Enhanced Navbar -->
     <nav class="navbar">
       <div class="nav-container">
