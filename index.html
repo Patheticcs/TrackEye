@@ -38,14 +38,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="/manifest.json" />
-    <style>
-
-    </style>
   </head>
   <body>
     <!-- Loader -->
-    <div class="loader">
-      <div class="loader-content"></div>
+    <!-- Dark/Light Mode Toggle -->
+    <div class="theme-toggle">
+      <input type="checkbox" id="theme-switch" class="theme-switch">
+      <label for="theme-switch" class="theme-switch-label">
+        <i class="fas fa-sun light-icon"></i>
+        <i class="fas fa-moon dark-icon"></i>
+        <div class="toggle-circle"></div>
+      </label>
     </div>
     <!-- Enhanced Navbar -->
     <nav class="navbar">
@@ -598,6 +601,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
     <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const themeSwitch = document.getElementById('theme-switch');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'inverted') {
+          root.style.filter = 'invert(1)';
+          themeSwitch.checked = true;
+        }
+        themeSwitch.addEventListener('change', function() {
+          if (this.checked) {
+            root.style.filter = 'invert(1)';
+            localStorage.setItem('theme', 'inverted');
+          } else {
+            root.style.filter = 'none';
+            localStorage.setItem('theme', 'normal');
+          }
+        });
+      });
       let currentSlide = 0;
       const slides = document.querySelectorAll('.testimonial-slide');
       const dotsContainer = document.querySelector('.testimonial-dots');
