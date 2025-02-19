@@ -40,7 +40,11 @@
     <link rel="manifest" href="/manifest.json" />
   </head>
   <body>
+    <div class="cursor-glow"></div>
     <!-- Loader -->
+      <div class="loader">
+        <div class="loader-content"></div>
+      </div>
     <!-- Dark/Light Mode Toggle -->
     <div class="theme-toggle">
       <input type="checkbox" id="theme-switch" class="theme-switch">
@@ -601,6 +605,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
     <script>
+      let lastScroll = 0;
+      const navbar = document.querySelector('.navbar');
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > lastScroll && currentScroll > 100) {
+          navbar.classList.add('floating');
+        } else {
+          navbar.classList.remove('floating');
+        }
+        lastScroll = currentScroll;
+      });
+      const cursor = document.querySelector('.cursor-glow');
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mouseenter', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.background = `
+                    radial-gradient(
+                        circle at ${x}px ${y}px,
+                        rgba(255,255,255,0.1),
+                        rgba(255,255,255,0.05) 40%,
+                        transparent 60%
+                    )
+                `;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.background = '';
+        });
+      });
       document.addEventListener('DOMContentLoaded', function() {
         const themeSwitch = document.getElementById('theme-switch');
         const root = document.documentElement;
