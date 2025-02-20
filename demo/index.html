@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackEye - Demo</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Library for Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" href="https://trackeye.vercel.app/images/favicon.png" type="image/png">
+    <!-- Open Graph Meta Tags for Discord and Social Media -->
+    <meta property="og:title" content="TrackEye - Next-Gen Analytics Platform">
+    <meta property="og:description" content="🚀 TrackEye offers advanced analytics for tracking user activity and behaviors in real-time. Gain insights, optimize performance, and grow your business with our cutting-edge platform. Try it now!">
+    <meta property="og:image" content="https://trackeye.vercel.app/images/discord-banner.png">
+    <!-- Custom Discord banner image -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://trackeye.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TrackEye">
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TrackEye - Next-Gen Analytics Platform">
+    <meta name="twitter:description" content="🚀 TrackEye offers advanced analytics for tracking user activity and behaviors in real-time. Gain insights, optimize performance, and grow your business with our cutting-edge platform. Try it now!">
+    <meta name="twitter:image" content="https://trackeye.vercel.app/images/banner.png">
+    <meta name="twitter:url" content="https://trackeye.vercel.app/">
+    <meta name="twitter:site" content="@TrackEyeApp">
+    <meta name="twitter:creator" content="@TrackEyeApp">
+    <!-- Additional Meta Tags for SEO and Social Media -->
+    <meta name="description" content="TrackEye offers advanced analytics for tracking user activity and behaviors in real-time. Gain insights, optimize performance, and grow your business with our cutting-edge platform.">
+    <meta name="keywords" content="analytics, user tracking, real-time data, business growth, performance optimization">
+    <meta name="author" content="TrackEye Team">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="apple-touch-icon" href="/images/icon.png" />
+    <meta name="apple-mobile-web-app-title" content="PatheticAI" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/manifest.json" />
+    <style>
+      :root {
+        --primary: #ffffff;
+        --primary-dark: #f0f0f0;
+        --secondary: #bfbfbf;
+        --accent: #808080;
+        --success: #ffffff;
+        --warning: #ffffff;
+        --danger: #ffffff;
+        --background: #000000;
+        --surface: #0a0a0a;
+        --surface-dark: #050505;
+        --text: #ffffff;
+        --text-secondary: #d0d0d0;
+        --glow: none;
+        --neon-glow: none;
+        --glass-background: rgba(0, 0, 0, 0.7);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--background);
+        color: var(--text);
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.025) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.025) 0%, transparent 50%);
+        z-index: -1;
+        pointer-events: none;
+        animation: backgroundPulse 10s ease-in-out infinite alternate;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: -1;
+        pointer-events: none;
+        animation: moveGrid 10s linear infinite;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        position: relative;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        background: white;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 3s infinite;
+      }
+
+      .nav-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--surface);
+        border-radius: 0.5rem;
+        border: var(--glass-border);
+      }
+
+      .nav-tab i {
+        margin-right: 8px;
+      }
+
+      .nav-tab {
+        padding: 0.75rem 1.5rem;
+        background: transparent;
+        border: var(--glass-border);
+        border-radius: 0.5rem;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .nav-tab:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-tab.active {
+        background: var(--primary);
+        color: var(--background);
+      }
+
+      .section {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .section.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .form-container {
+        background: var(--surface);
+        padding: 2rem;
+        border-radius: 1rem;
+        border: var(--glass-border);
+        margin-bottom: 2rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        background: var(--surface-dark);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.5rem;
+        color: var(--text);
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        background: var(--primary);
+        border: none;
+        border-radius: 0.5rem;
+        color: var(--background);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        background: var(--secondary);
+      }
+
+      .data-section {
+        background: var(--surface-gradient);
+        border: var(--glass-border);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .log-entry {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        background: var(--surface);
+        border-left: 3px solid var(--primary);
+        border-radius: 0.25rem;
+      }
+
+      .log-entry:hover {
+        transform: translateX(5px);
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .log-entry .timestamp {
+        color: var(--primary);
+      }
+
+      .log-entry pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-family: monospace;
+        font-size: 0.9rem;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 1rem 2rem;
+        background: white;
+        border-radius: 0.5rem;
+        color: black;
+        transform: translateY(150%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: var(--neon-glow);
+      }
+
+      .toast.show {
+        transform: translateY(0);
+      }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: white;
+        z-index: 1000;
+        transition: width 0.3s ease;
+      }
+
+      .loading {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--surface);
+        border-top-color: #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        display: none;
+        z-index: 1000;
+      }
+
+      @keyframes spin {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .media-player {
+        margin-bottom: 2rem;
+      }
+
+      video,
+      audio {
+        width: 100%;
+        border-radius: 0.5rem;
+        background: var(--surface-dark);
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--surface-dark);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar"></div>
+    <div class="loading"></div>
+    <div class="toast" id="toast"></div>
+    <div class="container">
+      <h1>
+        <i class="fas fa-eye"></i> TrackEye Demo
+      </h1>
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-section="form-section">
+          <i class="fas fa-file-alt"></i> Form Demo </button>
+        <button class="nav-tab" data-section="media-section">
+          <i class="fas fa-play-circle"></i> Media Players </button>
+        <button class="nav-tab" data-section="logs-section">
+          <i class="fas fa-list-alt"></i> Activity Logs </button>
+      </nav>
+      <!-- Form Section -->
+      <section id="form-section" class="section active">
+        <div class="form-container">
+          <h2>Test Form</h2>
+          <form id="test-form">
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message:</label>
+              <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">
+              <i class="fas fa-paper-plane"></i> Submit Form </button>
+          </form>
+        </div>
+      </section>
+      <!-- Media Section -->
+      <section id="media-section" class="section">
+        <div class="data-section">
+          <h2>Media Players</h2>
+          <div class="media-player">
+            <video controls>
+              <source src="/api/placeholder/400/320" type="video/mp4"> Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="media-player">
+            <audio controls>
+              <source src="/api/placeholder/400/320" type="audio/mpeg"> Your browser does not support the audio tag.
+            </audio>
+          </div>
+        </div>
+      </section>
+      <!-- Logs Section -->
+      <section id="logs-section" class="section">
+        <div class="data-section">
+          <h2>Session Information</h2>
+          <div id="session-info"></div>
+        </div>
+        <div class="data-section">
+          <h2>User Activity</h2>
+          <div id="user-activity"></div>
+        </div>
+        <div class="data-section">
+          <h2>Form Interactions</h2>
+          <div id="form-interactions"></div>
+        </div>
+        <div class="data-section">
+          <h2>Media Interactions</h2>
+          <div id="media-interactions"></div>
+        </div>
+        <div class="data-section">
+          <h2>Keyboard Input</h2>
+          <div id="keyboard-input"></div>
+        </div>
+      </section>
+    </div>
+    <script>
+      const sessionId = Math.random().toString(36).substring(2, 15);
+      const sessionStartTime = Date.now();
+      let typingBuffer = "";
+      let typingTimeout;
+
+      function displayData(sectionId, data) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const logEntry = document.createElement('div');
+          logEntry.className = 'log-entry';
+          const timestamp = new Date().toLocaleTimeString();
+          logEntry.innerHTML = `
+
+										
+																															<div class="timestamp">${timestamp}</div>
+																															<pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+          section.insertBefore(logEntry, section.firstChild);
+        }
+      }
+
+      function showToast(message, duration = 3000) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), duration);
+      }
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+          tab.classList.add('active');
+          const sectionId = tab.getAttribute('data-section');
+          document.getElementById(sectionId).classList.add('active');
+          const tabData = {
+            sessionId,
+            event: 'tab_change',
+            tab: sectionId,
+            timestamp: new Date().toISOString()
+          };
+          displayData('user-activity', tabData);
+        });
+      });
+      document.getElementById('test-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const formDataObject = {};
+        formData.forEach((value, key) => {
+          formDataObject[key] = value;
+        });
+        document.querySelector('.loading').style.display = 'block';
+        setTimeout(() => {
+          const formSubmitData = {
+            sessionId,
+            event: "form_submit",
+            form_id: form.id,
+            form_data: formDataObject,
+            timestamp: new Date().toISOString()
+          };
+          displayData("form-interactions", formSubmitData);
+          document.querySelector('.loading').style.display = 'none';
+          showToast('Form submitted successfully!');
+          form.reset();
+          typingBuffer = "";
+        }, 1000);
+      });
+      document.addEventListener('input', (event) => {
+        if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+          const inputData = {
+            sessionId,
+            event: 'input',
+            element: event.target.name,
+            type: event.target.type,
+            value: event.target.value.length + ' characters',
+            timestamp: new Date().toISOString()
+          };
+          displayData('form-interactions', inputData);
+        }
+      });
+      document.addEventListener('keydown', (event) => {
+        if (!['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) {
+          typingBuffer += event.key;
+          clearTimeout(typingTimeout);
+          typingTimeout = setTimeout(() => {
+            if (typingBuffer.length > 0) {
+              const keystrokeData = {
+                sessionId,
+                event: 'keystrokes',
+                content: typingBuffer,
+                length: typingBuffer.length,
+                timestamp: new Date().toISOString()
+              };
+              displayData('keyboard-input', keystrokeData);
+              typingBuffer = "";
+            }
+          }, 2000);
+        }
+      });
+      document.addEventListener("click", (event) => {
+        const rect = event.target.getBoundingClientRect();
+        const clickData = {
+          sessionId,
+          event: "click",
+          element: {
+            tag: event.target.tagName,
+            id: event.target.id,
+            class: event.target.className,
+            text: event.target.textContent?.trim().substring(0, 50) || 'N/A'
+          },
+          position: {
+            x: event.clientX,
+            y: event.clientY,
+            relativeToElement: {
+              x: event.clientX - rect.left,
+              y: event.clientY - rect.top
+            }
+          },
+          timestamp: new Date().toISOString()
+        };
+        displayData("user-activity", clickData);
+      });
+      const mediaEvents = ['play', 'pause', 'seeked', 'volumechange', 'ended'];
+      mediaEvents.forEach(eventName => {
+        document.addEventListener(eventName, (event) => {
+          if (event.target.tagName === "VIDEO" || event.target.tagName === "AUDIO") {
+            const mediaData = {
+              sessionId,
+              event: `media_${eventName}`,
+              type: event.target.tagName.toLowerCase(),
+              currentTime: event.target.currentTime,
+              duration: event.target.duration,
+              volume: event.target.volume,
+              muted: event.target.muted,
+              timestamp: new Date().toISOString()
+            };
+            displayData("media-interactions", mediaData);
+          }
+        }, true);
+      });
+      let lastScrollUpdate = 0;
+      window.addEventListener('scroll', () => {
+        const now = Date.now();
+        if (now - lastScrollUpdate > 100) {
+          const winScroll = document.documentElement.scrollTop;
+          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrolled = (winScroll / height) * 100;
+          document.querySelector('.progress-bar').style.width = scrolled + '%';
+          if (scrolled % 25 < 1) {
+            const scrollData = {
+              sessionId,
+              event: "scroll_milestone",
+              percentage: Math.floor(scrolled),
+              timestamp: new Date().toISOString()
+            };
+            displayData("user-activity", scrollData);
+          }
+          lastScrollUpdate = now;
+        }
+      });
+      const sessionInfo = {
+        sessionId,
+        startTime: new Date(sessionStartTime).toISOString(),
+        userAgent: navigator.userAgent,
+        screenResolution: `${window.screen.width}x${window.screen.height}`,
+        windowSize: `${window.innerWidth}x${window.innerHeight}`,
+        devicePixelRatio: window.devicePixelRatio,
+        language: navigator.language,
+        platform: navigator.platform,
+        timestamp: new Date().toISOString()
+      };
+      displayData("session-info", sessionInfo);
+      window.addEventListener('error', (event) => {
+        const errorData = {
+          sessionId,
+          event: "error",
+          message: event.message,
+          source: event.filename,
+          lineNumber: event.lineno,
+          columnNumber: event.colno,
+          timestamp: new Date().toISOString()
+        };
+        displayData("error-logs", errorData);
+      });
+      document.addEventListener('visibilitychange', () => {
+        const visibilityData = {
+          sessionId,
+          event: "visibility_change",
+          state: document.visibilityState,
+          timestamp: new Date().toISOString()
+        };
+        displayData("user-activity", visibilityData);
+      });
+      window.addEventListener('focus', () => {
+        const focusData = {
+          sessionId,
+          event: "window_focus",
+          timestamp: new Date().toISOString()
+        };
+        displayData("user-activity", focusData);
+      });
+      window.addEventListener('blur', () => {
+        const blurData = {
+          sessionId,
+          event: "window_blur",
+          timestamp: new Date().toISOString()
+        };
+        displayData("user-activity", blurData);
+      });
+    </script>
+  </body>
+</html>
