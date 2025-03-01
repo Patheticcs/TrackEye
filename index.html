@@ -1382,9 +1382,6 @@
   <body>
     <div class="cursor-glow"></div>
     <!-- Loader -->
-    <div class="loader">
-      <div class="loader-content"></div>
-    </div>
     <!-- Dark/Light Mode Toggle -->
     <div class="theme-toggle">
       <input type="checkbox" id="theme-switch" class="theme-switch">
@@ -1406,7 +1403,7 @@
           <a href="#pricing" class="nav-link">Pricing</a>
           <a href="#testimonials" class="nav-link">Testimonials</a>
           <a href="#faq" class="nav-link">Faq</a>
-          <a href="#contact" class="nav-link">Contact</a>
+          <a href="/contact" class="nav-link">Contact</a>
           <a href="https://discord.com/invite/NWQ9HN27vF" class="btn btn-primary" target="_blank">
             <i class="fab fa-discord"></i>Join Discord </a>
         </div>
@@ -1421,7 +1418,7 @@
         <a href="#pricing" class="nav-link">Pricing</a>
         <a href="#testimonials" class="nav-link">Testimonials</a>
         <a href="#faq" class="nav-link">Faq</a>
-        <a href="#contact" class="nav-link">Contact</a>
+        <a href="/contact" class="nav-link">Contact</a>
         <a href="https://discord.gg/NWQ9HN27vF" class="btn btn-primary" target="_blank">
           <i class="fab fa-discord"></i>Join Discord </a>
       </div>
@@ -1434,8 +1431,8 @@
         <div class="hero-cta">
           <a href="#features" class="btn btn-primary">
             <i class="fas fa-rocket"></i> Explore Features </a>
-          <a href="#contact" class="btn btn-outline">
-            <i class="fas fa-paper-plane"></i> Contact Sales </a>
+          <a href="/contact" class="btn btn-outline">
+            <i class="fas fa-paper-plane"></i> Contact </a>
           <a href="/demo" class="btn btn-outline">
             <i class="fas fa-play"></i> Demo </a>
           <a href="/templates" class="btn btn-outline">
@@ -1722,70 +1719,6 @@
         </div>
       </div>
     </section>
-    <!-- Enhanced Contact Section -->
-    <section id="contact" class="contact">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
-        <div class="contact-grid">
-          <div class="contact-info" data-aos="fade-right">
-            <div class="contact-item">
-              <i class="fas fa-envelope"></i>
-              <div>
-                <h3>Email Us</h3>
-                <p>patheticcs@gmail.com</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fab fa-discord"></i>
-              <div>
-                <h3>Join Discord</h3>
-                <p>Real-time community support</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fas fa-clock"></i>
-              <div>
-                <h3>24/7 Support</h3>
-                <p>Always here to help</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <div>
-                <h3>Global Presence</h3>
-                <p>Serving clients worldwide</p>
-              </div>
-            </div>
-          </div>
-          <form class="contact-form" id="contact-form" data-aos="fade-left">
-            <div class="form-group">
-              <input type="text" class="form-input" id="name" name="name" placeholder=" " required>
-              <label class="form-label" for="name">Your Name</label>
-            </div>
-            <div class="form-group">
-              <input type="email" class="form-input" id="email" name="email" placeholder=" " required>
-              <label class="form-label" for="email">Your Email</label>
-            </div>
-            <div class="form-group">
-              <select class="form-input" id="subject" name="subject" required>
-                <option value="">Select Subject</option>
-                <option value="sales">Sales Inquiry</option>
-                <option value="support">Technical Support</option>
-                <option value="billing">Billing Question</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <textarea class="form-textarea" id="message" name="message" placeholder=" " required></textarea>
-              <label class="form-label" for="message">Your Message</label>
-            </div>
-            <button type="submit" class="btn btn-primary" id="submit-btn">
-              <i class="fas fa-paper-plane"></i> Send Message </button>
-            <p id="cooldown-message" style="display: none; color: var(--text-secondary); margin-top: 1rem;"> Please wait <span id="cooldown-timer">30</span> seconds before submitting again. </p>
-          </form>
-        </div>
-      </div>
-    </section>
     <!-- Enhanced Footer -->
     <footer class="footer">
       <div class="container">
@@ -1901,13 +1834,13 @@
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
           card.style.background = `
-                    radial-gradient(
-                        circle at ${x}px ${y}px,
-                        rgba(255,255,255,0.1),
-                        rgba(255,255,255,0.05) 40%,
-                        transparent 60%
-                    )
-                `;
+      radial-gradient(
+        circle at ${x}px ${y}px,
+        rgba(255,255,255,0.1),
+        rgba(255,255,255,0.05) 40%,
+        transparent 60%
+      )
+    `;
         });
         card.addEventListener('mouseleave', () => {
           card.style.background = '';
@@ -2003,42 +1936,6 @@
             });
             mobileMenu.classList.remove('active');
           }
-        });
-      });
-      (function() {
-        emailjs.init("Z3sL7Rd9MELcEsZ_v");
-      })();
-      const COOLDOWN_DURATION = 30;
-      let isCooldown = false;
-      document.getElementById("contact-form").addEventListener("submit", function(event) {
-        event.preventDefault();
-        if (isCooldown) {
-          alert("Please wait before submitting again.");
-          return;
-        }
-        const submitBtn = document.getElementById("submit-btn");
-        submitBtn.disabled = true;
-        isCooldown = true;
-        const cooldownMessage = document.getElementById("cooldown-message");
-        const cooldownTimer = document.getElementById("cooldown-timer");
-        cooldownMessage.style.display = "block";
-        let timeLeft = COOLDOWN_DURATION;
-        const timerInterval = setInterval(() => {
-          timeLeft--;
-          cooldownTimer.textContent = timeLeft;
-          if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            cooldownMessage.style.display = "none";
-            submitBtn.disabled = false;
-            isCooldown = false;
-          }
-        }, 1000);
-        emailjs.sendForm("service_vv4a8gc", "template_kqdcx4t", this).then(function(response) {
-          console.log("SUCCESS", response);
-          alert("Message sent successfully!");
-        }, function(error) {
-          console.log("FAILED", error);
-          alert("Failed to send message. Please try again.");
         });
       });
     </script>
