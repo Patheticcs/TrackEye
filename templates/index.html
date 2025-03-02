@@ -1241,10 +1241,18 @@
         const modalIframe = document.getElementById('modalIframe');
         modalIframe.src = previewUrl;
         const liveDemoButton = document.querySelector('.modal-buttons .btn-outline');
-        liveDemoButton.href = previewUrl;
-        document.getElementById('templateModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-      }
+        liveDemoButton.href = `https:
+
+    console.log('Live Demo Href:', liveDemoButton.href);
+    liveDemoButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Live Demo button clicked');
+        window.location.href = liveDemoButton.href;
+    });
+
+    document.getElementById('templateModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
 
       function closeModal() {
         document.getElementById('templateModal').style.display = 'none';
