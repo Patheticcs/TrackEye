@@ -1164,10 +1164,10 @@
         </div>
         <p class="modal-description" id="modalDescription">Template description goes here.</p>
         <div class="modal-iframe-container">
-          <iframe id="modalIframe" class="modal-iframe" src="https://trackeye.vercel.app/templates/terminal" frameborder="0"></iframe>
+          <iframe id="modalIframe" class="modal-iframe" src="" frameborder="0"></iframe>
         </div>
         <div class="modal-buttons">
-          <a href="/templates/terminal" class="btn btn-outline">Live Demo</a>
+          <a href="#" class="btn btn-outline">Live Demo</a>
         </div>
         <div class="modal-details">
           <div class="detail-group">
@@ -1238,7 +1238,10 @@
       function showTemplatePreview(templateId, title, description, previewUrl) {
         document.getElementById('modalTitle').textContent = title;
         document.getElementById('modalDescription').textContent = description;
-        document.getElementById('modalIframe').src = previewUrl;
+        const modalIframe = document.getElementById('modalIframe');
+        modalIframe.src = previewUrl;
+        const liveDemoButton = document.querySelector('.modal-buttons .btn-outline');
+        liveDemoButton.href = previewUrl;
         document.getElementById('templateModal').style.display = 'block';
         document.body.style.overflow = 'hidden';
       }
@@ -1252,15 +1255,15 @@
         if (event.target == modal) {
           closeModal();
         }
-      }
+      };
       const filterButtons = document.querySelectorAll('.filter-btn');
       const templateCards = document.querySelectorAll('.template-card');
-      filterButtons.forEach(button => {
+      filterButtons.forEach((button) => {
         button.addEventListener('click', () => {
-          filterButtons.forEach(btn => btn.classList.remove('active'));
+          filterButtons.forEach((btn) => btn.classList.remove('active'));
           button.classList.add('active');
           const filterValue = button.getAttribute('data-filter');
-          templateCards.forEach(card => {
+          templateCards.forEach((card) => {
             if (filterValue === 'all') {
               card.style.display = 'block';
             } else {
@@ -1273,7 +1276,7 @@
           });
         });
       });
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
           const targetId = this.getAttribute('href');
@@ -1282,7 +1285,7 @@
           if (targetElement) {
             window.scrollTo({
               top: targetElement.offsetTop,
-              behavior: 'smooth'
+              behavior: 'smooth',
             });
           }
         });
