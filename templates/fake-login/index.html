@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-In</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+
+        50% {
+          background-position: 100% 50%;
+        }
+
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.03);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shake {
+
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: translateX(-5px);
+        }
+
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: translateX(5px);
+        }
+      }
+
+      body {
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        background: linear-gradient(-45deg, #111, #222, #333, #000);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 25%),
+          radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 25%);
+        pointer-events: none;
+      }
+
+      .container {
+        background: rgba(20, 20, 20, 0.7);
+        backdrop-filter: blur(15px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.5),
+          0 5px 15px rgba(0, 0, 0, 0.05),
+          inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        padding: 3rem;
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+        z-index: -1;
+      }
+
+      .logo {
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: white;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .logo i {
+        margin-right: 10px;
+        background: linear-gradient(to right, #fff, #ccc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .form-toggle {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+        position: relative;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        padding: 5px;
+      }
+
+      .form-toggle button {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        z-index: 2;
+        flex: 1;
+        position: relative;
+        letter-spacing: 0.5px;
+      }
+
+      .form-toggle button:hover {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-toggle button.active {
+        color: #fff;
+      }
+
+      .toggle-indicator {
+        position: absolute;
+        height: calc(100% - 10px);
+        top: 5px;
+        width: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 1;
+      }
+
+      .form-content {
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        opacity: 0;
+        transform: translateX(50px);
+        position: absolute;
+        width: 100%;
+        transition: all 0.4s ease;
+      }
+
+      .form.active {
+        opacity: 1;
+        transform: translateX(0);
+        position: relative;
+      }
+
+      .form h2 {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        font-size: 1.8rem;
+        background: linear-gradient(to right, #fff, #ddd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .form p {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .input-group {
+        position: relative;
+        text-align: left;
+      }
+
+      .input-group label {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 1rem;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-group label i {
+        margin-right: 8px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 45px;
+        border: none;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.07);
+        color: #fff;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .input-group input:focus {
+        background: rgba(255, 255, 255, 0.1);
+        outline: none;
+        box-shadow:
+          0 0 0 2px rgba(255, 255, 255, 0.1),
+          inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-group input:valid+label,
+      .input-group input:focus+label {
+        transform: translateY(-180%);
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .error-message {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+        text-align: left;
+        animation: fadeIn 0.3s ease;
+        padding-left: 15px;
+      }
+
+      .error-message.visible {
+        display: block;
+      }
+
+      .error-input {
+        box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3) !important;
+        animation: shake 0.5s;
+      }
+
+      .submit-btn {
+        padding: 1rem;
+        border: none;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #222;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transform: translateX(-100%);
+        transition: all 0.6s ease;
+      }
+
+      .submit-btn:hover {
+        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .submit-btn:hover::before {
+        transform: translateX(100%);
+      }
+
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .forgotten-password {
+        text-align: right;
+        margin-top: 0.5rem;
+      }
+
+      .forgotten-password a {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .forgotten-password a:hover {
+        color: white;
+        text-decoration: underline;
+      }
+
+      .social-login {
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1.5rem;
+      }
+
+      .social-login p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 1rem;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .social-icon:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+      }
+
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .loading-screen.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        color: white;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .toast.success {
+        background: rgba(46, 213, 115, 0.9);
+      }
+
+      .toast.error {
+        background: rgba(255, 71, 87, 0.9);
+      }
+
+      .toast.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .toast i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      @media screen and (max-width: 480px) {
+        .container {
+          max-width: 90%;
+          padding: 2rem;
+        }
+
+        .logo {
+          font-size: 2rem;
+        }
+
+        .form-toggle button {
+          padding: 0.7rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <i class="fas fa-shield-alt"></i>REGISTER
+      </div>
+      <div class="form-container">
+        <div class="form-toggle">
+          <button id="login-toggle" onclick="toggleForm('login')">Login</button>
+          <button id="signup-toggle" onclick="toggleForm('signup')">Sign Up</button>
+          <div class="toggle-indicator"></div>
+        </div>
+        <div class="form-content">
+          <form id="login-form" class="form active" onsubmit="handleLogin(event)">
+            <h2>Welcome Back</h2>
+            <p>Enter your credentials to access your account</p>
+            <div class="input-group">
+              <input type="email" id="login-email" required>
+              <label for="login-email">
+                <i class="fas fa-envelope"></i>Email </label>
+            </div>
+            <div class="error-message" id="login-email-error">Please enter a valid email address.</div>
+            <div class="input-group">
+              <input type="password" id="login-password" required>
+              <label for="login-password">
+                <i class="fas fa-lock"></i>Password </label>
+            </div>
+            <div class="error-message" id="login-password-error">Password must be at least 6 characters.</div>
+            <div class="error-message" id="login-error">The email or password you entered is incorrect.</div>
+            <div class="forgotten-password">
+              <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+            <div class="social-login">
+              <p>Or continue with</p>
+              <div class="social-icons">
+                <div class="social-icon">
+                  <i class="fab fa-google"></i>
+                </div>
+                <div class="social-icon">
+                  <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-icon">
+                  <i class="fab fa-apple"></i>
+                </div>
+              </div>
+            </div>
+          </form>
+          <form id="signup-form" class="form" onsubmit="handleSignup(event)">
+            <h2>Create Account</h2>
+            <p>Join us and experience security at its best</p>
+            <div class="input-group">
+              <input type="text" id="signup-name" required>
+              <label for="signup-name">
+                <i class="fas fa-user"></i>Full Name </label>
+            </div>
+            <div class="error-message" id="signup-name-error">Please enter your full name.</div>
+            <div class="input-group">
+              <input type="email" id="signup-email" required>
+              <label for="signup-email">
+                <i class="fas fa-envelope"></i>Email </label>
+            </div>
+            <div class="error-message" id="signup-email-error">Please enter a valid email address.</div>
+            <div class="input-group">
+              <input type="password" id="signup-password" required>
+              <label for="signup-password">
+                <i class="fas fa-lock"></i>Password </label>
+            </div>
+            <div class="error-message" id="signup-password-error">Password must be at least 8 characters with a number and symbol.</div>
+            <div class="error-message" id="signup-error">This email is already registered.</div>
+            <button type="submit" class="submit-btn">Create Account</button>
+            <div class="social-login">
+              <p>Or sign up with</p>
+              <div class="social-icons">
+                <div class="social-icon">
+                  <i class="fab fa-google"></i>
+                </div>
+                <div class="social-icon">
+                  <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-icon">
+                  <i class="fab fa-apple"></i>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+      <div class="loader"></div>
+      <span>Processing...</span>
+    </div>
+    <!-- Toast Notifications -->
+    <div class="toast success" id="success-toast">
+      <i class="fas fa-check-circle"></i>
+      <span id="success-message">Action completed successfully!</span>
+    </div>
+    <div class="toast error" id="error-toast">
+      <i class="fas fa-exclamation-circle"></i>
+      <span id="error-message">Something went wrong!</span>
+    </div>
+    <script>
+      let users = [{
+        name: "John Doe",
+        email: "john@example.com",
+        password: "password123"
+      }];
+
+      function toggleForm(formType) {
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const loginToggle = document.getElementById('login-toggle');
+        const signupToggle = document.getElementById('signup-toggle');
+        const indicator = document.querySelector('.toggle-indicator');
+        document.querySelectorAll('.error-message').forEach(el => {
+          el.classList.remove('visible');
+        });
+        document.querySelectorAll('input').forEach(input => {
+          input.classList.remove('error-input');
+        });
+        if (formType === 'login') {
+          loginForm.classList.add('active');
+          signupForm.classList.remove('active');
+          loginToggle.classList.add('active');
+          signupToggle.classList.remove('active');
+          indicator.style.left = '0';
+        } else {
+          loginForm.classList.remove('active');
+          signupForm.classList.add('active');
+          loginToggle.classList.remove('active');
+          signupToggle.classList.add('active');
+          indicator.style.left = '50%';
+        }
+      }
+
+      function showError(inputId, errorId, message = null) {
+        const input = document.getElementById(inputId);
+        const error = document.getElementById(errorId);
+        input.classList.add('error-input');
+        error.classList.add('visible');
+        if (message) {
+          error.textContent = message;
+        }
+        setTimeout(() => {
+          input.classList.remove('error-input');
+          error.classList.remove('visible');
+        }, 5000);
+      }
+
+      function showToast(type, message) {
+        const toast = document.getElementById(`${type}-toast`);
+        const messageEl = document.getElementById(`${type}-message`);
+        messageEl.textContent = message;
+        toast.classList.add('visible');
+        setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 3000);
+      }
+
+      function showLoading() {
+        document.getElementById('loading-screen').classList.add('active');
+      }
+
+      function hideLoading() {
+        document.getElementById('loading-screen').classList.remove('active');
+      }
+
+      function isEmailValid(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
+
+      function checkPasswordStrength() {
+        const password = document.getElementById('signup-password').value;
+        const strengthMeter = document.getElementById('password-strength');
+        const strengthText = document.getElementById('password-strength-text');
+        if (password.length > 0) {
+          strengthMeter.style.display = 'block';
+          strengthText.style.display = 'block';
+        } else {
+          strengthMeter.style.display = 'none';
+          strengthText.style.display = 'none';
+          return;
+        }
+        strengthMeter.classList.remove('weak', 'medium', 'strong');
+        let strength = 0;
+        if (password.length >= 8) strength += 1;
+        if (/[A-Z]/.test(password)) strength += 1;
+        if (/[0-9]/.test(password)) strength += 1;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+        if (strength <= 1) {
+          strengthMeter.classList.add('weak');
+          strengthText.textContent = 'Weak';
+        } else if (strength <= 3) {
+          strengthMeter.classList.add('medium');
+          strengthText.textContent = 'Medium';
+        } else {
+          strengthMeter.classList.add('strong');
+          strengthText.textContent = 'Strong';
+        }
+      }
+
+      function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        let hasErrors = false;
+        document.querySelectorAll('.error-message').forEach(el => {
+          el.classList.remove('visible');
+        });
+        document.querySelectorAll('input').forEach(input => {
+          input.classList.remove('error-input');
+        });
+        if (!isEmailValid(email)) {
+          showError('login-email', 'login-email-error');
+          hasErrors = true;
+        }
+        if (password.length < 6) {
+          showError('login-password', 'login-password-error');
+          hasErrors = true;
+        }
+        if (hasErrors) return;
+        showLoading();
+        setTimeout(() => {
+          const user = users.find(u => u.email === email && u.password === password);
+          if (user) {
+            hideLoading();
+            showToast('success', 'Login successful! Redirecting...');
+            setTimeout(() => {
+              document.querySelector('.container').style.animation = 'pulse 1s ease';
+            }, 1000);
+          } else {
+            hideLoading();
+            const randError = Math.random();
+            if (randError < 0.33) {
+              showError('login-email', 'login-email-error', 'We couldn\'t find an account with this email.');
+            } else if (randError < 0.66) {
+              showError('login-password', 'login-password-error', 'The password you entered is incorrect.');
+            } else {
+              showError('login-email', 'login-error', 'Too many failed attempts. Please try again later.');
+              showError('login-password', 'login-error');
+            }
+          }
+        }, 1500);
+      }
+
+      function handleSignup(event) {
+        event.preventDefault();
+        const name = document.getElementById('signup-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        let hasErrors = false;
+        document.querySelectorAll('.error-message').forEach(el => {
+          el.classList.remove('visible');
+        });
+        document.querySelectorAll('input').forEach(input => {
+          input.classList.remove('error-input');
+        });
+        if (name.length < 3 || !name.includes(' ')) {
+          showError('signup-name', 'signup-name-error', 'Please enter your full name (first and last name).');
+          hasErrors = true;
+        }
+        if (!isEmailValid(email)) {
+          showError('signup-email', 'signup-email-error');
+          hasErrors = true;
+        }
+        if (password.length < 8 || !/[0-9]/.test(password) || !/[^A-Za-z0-9]/.test(password)) {
+          showError('signup-password', 'signup-password-error');
+          hasErrors = true;
+        }
+        if (hasErrors) return;
+        const emailExists = users.some(u => u.email === email);
+        if (emailExists) {
+          showError('signup-email', 'signup-error', 'This email is already registered. Try logging in instead.');
+          return;
+        }
+        showLoading();
+        setTimeout(() => {
+          const shouldFail = Math.random() < 0.3;
+          if (shouldFail) {
+            hideLoading();
+            const errorType = Math.floor(Math.random() * 3);
+            if (errorType === 0) {
+              showError('signup-email', 'signup-error', 'Our system is experiencing issues. Please try again later.');
+            } else if (errorType === 1) {
+              showError('signup-password', 'signup-password-error', 'Your password doesn\'t meet our security requirements.');
+            } else {
+              showToast('error', 'Connection error. Please check your internet and try again.');
+            }
+          } else {
+            users.push({
+              name,
+              email,
+              password
+            });
+            hideLoading();
+            showToast('success', 'Account created successfully!');
+            document.getElementById('signup-name').value = '';
+            document.getElementById('signup-email').value = '';
+            document.getElementById('signup-password').value = '';
+            setTimeout(() => {
+              toggleForm('login');
+            }, 2000);
+          }
+        }, 2000);
+      }
+      toggleForm('login');
+    </script>
+  </body>
+</html>
